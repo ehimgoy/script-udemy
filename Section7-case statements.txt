@@ -1,0 +1,69 @@
+Case statements
+
+Alternative to if statements
+if[ "$VAR" = "one" ]
+elif[ "$VAR" = "two" ]
+elif[ "$VAR" = "three" ]
+elif[ "$VAR" = "four" ]
+
+case "$VAR" in 
+   pattern_1)
+	#Commands go here.
+         ;;
+   pattern_N)
+	# Commands go here.
+	;;
+esac
+
+EX-
+case "$1" in
+	start)
+	   /usr/sbin/sshd
+	   ;;
+	stop)
+	   kill $(cat /var/run/sshd.pid)
+	   ;;
+esac
+
+
+case "$1" in
+	start)
+	   /usr/sbin/sshd
+	   ;;
+	stop)
+	   kill $(cat /var/run/sshd.pid)
+	   ;;
+	*)
+	echo "Usage: $0 start|stop"; exit 1
+	   ;;
+esac
+
+############
+#!/bin/bash
+read -p "Enter y or n: " ANSWER
+case "$ANSWER" in
+	[yY]|[yY][eE][sS])
+	   echo "You answered yes."
+	   ;;
+	[nN]|[nN][oO])
+	   echo "You answered no."
+	   ;;
+	*)
+	   echo "Invalid answer."
+	   ;;
+esac
+
+#########
+read -p "Enter y or n: " ANSWER
+case "$ANSWER" in
+	[yY]*)
+	  echo "You answered yes."
+	  ;;
+	*)
+	  echo "You answered something else."
+	  ;;
+esac
+
+
+	
+

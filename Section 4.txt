@@ -1,0 +1,133 @@
+Functions
+Why to use functions
+How to create them
+How to use them
+Variable scope
+Functional Parameters
+Exit statuses and return codes
+
+Why use functions?(Keep it DRY!)
+-Don't repeat yourself! Don't repeat yourself!
+-write once,use many times.
+-Reduce script length
+-Single place to edit and troubleshoot
+-Easier to maintain
+
+If you're repeating yourself,use a function.
+-Reusable code
+-Must be defined before use
+-Has paramter support
+
+Creating a function
+function function-name(){
+#Code goes here.
+}
+or
+function-name()
+{
+#Code goes here.
+}
+______________
+#!/bin/bash
+function hello(){
+  echo "Hello!"
+}
+hello
+
+
+Function can call other functions
+#!/bin/bash
+function hello()
+{
+echo "Hello!"
+now
+}
+function now(){
+  echo "It's $(date +%r)"
+}
+hello
+
+Positional Parameters
+-Function can acccept parameters.
+-The first parameter is stored in $1
+-The second parameter is stored in $2, etc.
+-$@ contains all of the parameters
+-Just like shell scripts.
+$0=the script itself,not function name
+
+#!/bin/bash
+function hello(){
+echo "Hello $1"
+}
+hello Jason
+
+#!/bin/bash
+function hello(){
+for NAME in $@
+do
+ echo "Hello $NAME"
+done
+}
+hello Jason Dan Ryan
+###########################33
+Variable Scope
+-by default,variables are global
+-Variables have to be defined before used
+
+GLOBAL_VAR=1
+my_function
+#######################
+Local Variables
+-Can only be accessed within the function
+-Create using the local keyword
+local LOCAL_VAR=1
+-Only functions can have local variables
+-Best practice to keep variables local in functions
+
+#########
+Exit status(Return Codes)
+-Functions have an exit status
+-Explicitly
+return <Return_Code>
+-Implicitly
+The exit status of the last command executed in the function
+
+my_function
+echo $?
+################3
+function backup_file()
+{
+if [ -f $1 ]
+then
+ BACK="/tmp/$(basename ${1}).$(date +%F).$$"
+ echo "Backing up $1 to ${BACK}"
+ cp $1 $BACK
+fi
+}
+backup_file /etc/hosts
+if [ $? -eq 0 ]
+then
+  echo "Backup succeeded!"
+fi
+
+###################
+function backup_file()
+{
+if [ -f $1 ]
+then
+ local BACK="/tmp/$(basename ${1}).$(date +%F).$$"
+ echo "Backing up $1 to ${BACK}"
+ cp $1 $BACK
+else
+ #The file does not exist
+ return 1
+fi
+}
+backup_file /etc/hosts
+if [ $? -eq 0 ]
+then 
+  echo "Backup succeeded!"
+ else
+  echo "Backup failed!"
+  exit1
+fi

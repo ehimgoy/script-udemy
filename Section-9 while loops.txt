@@ -1,0 +1,87 @@
+-While loops
+-Infinite loops
+-loop control
+explicit no of times
+user input
+command exit status
+-Reading files,line by line
+-break and continue
+
+While loop format
+
+while [ Condition_is_true ]
+do
+   command 1
+   command 2
+   command N
+done
+
+#######Infinite loop
+while true
+do 
+ command N
+ sleep 1
+done
+
+##########
+Loop 5 times
+
+INDEX=1
+while [ $INDEX -lt 6 ]
+do
+  echo "Creating project-${INDEX}"
+  mkdir /usr/local/project-${INDEX}
+  ((INDEX++))
+done
+
+#########3Checking user input
+while [ "$CORRECT" !="y" ]
+do
+ read -p "Enter your name: " NAME
+ read -p "Is ${NAME} correct? " CORRECT
+done
+
+############ Return code of command
+while ping -c 1 app1 >/dev/null
+do
+   echo "app1 still up..."
+   sleep 5
+done
+ 
+echo "app1 down, continuing."
+
+######## Reading a file, line by line
+LINE_NUM=1
+while read LINE
+do 
+  echo "${LINE_NUM}: ${LINE}"
+  {{LINE_NUM++))
+ done < /etc/fstab
+
+########
+grep xfs /etc/fstab | while read LINE
+do 
+  echo "xfs: ${LINE}"
+done	 
+
+#########
+FS_NUM=1
+grep xfs /etc/fstab | while read FS MP REST
+do
+  echo "${FS_NUM}: file system: ${FS}"
+  echo "${FS_NUM}: mount point: ${MP}"
+  ((FS_NUM++))
+done
+
+###########
+mysql -BNe 'show databases' | while read DB
+do
+  db-backed-up-recently $DB
+  if [ "$?" -eq "0" ]
+  then
+    continue
+  fi
+   backup $DB
+done
+
+

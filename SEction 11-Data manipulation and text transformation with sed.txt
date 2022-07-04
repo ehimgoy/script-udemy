@@ -1,0 +1,38 @@
+Sed =Stream Editor
+A stream is data that travels from:
+-one process to another through a pipe
+-one file to another as a redirect
+-one device to another
+
+Sed performs text transforamtions on streams.
+Ex-
+-Substitute some text for other text
+-Remove line
+-Append text after given lines
+-insert text before certain lines
+
+Sed is used programmatically not interactively
+sed is a standalone utility and not a shell built in
+type -a sed
+man sed
+
+echo 'He is an assistant manager' > manager.txt
+cat manager.txt
+sed 's/assistant/assistant to the/' manager.txt
+
+Syntax
+sed 's/search-pattern/replacement-string/flags' file.txt
+
+sed 's/my wife/sed/g' love.txt > my-new-love.txt
+
+sed -i.bak 's/my wife/sed/' love.txt
+echo '/home/jason' | sed 's#/home/jason#/export/users/jasonc#'
+
+sed '/This/d' love.txt  -to delete particular line with this
+sed '/^#/d' config   -to delete line with pund sign
+sed '/^$/d' config  -to delete blank line
+sed '/^#/d' ; /^$/d ; s/apache/httpd' config
+
+sed '2 s/apache/httpd/' config	-2 is the address so it will replace apache in only 2nd line
+
+sed '/Group/ s/apache/httpd/' config	-it changes apache in the line where the word group is there

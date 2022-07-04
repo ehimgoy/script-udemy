@@ -1,0 +1,174 @@
+Ex1-
+vi script.sh
+#!/bin/bash
+echo "SCripting is fun!"
+
+chmod 755 script.sh
+./script.sh
+
+##############3
+Variables-storage location that have a name
+Name-value pairs
+VARIABLE_NAME="Value"
+
+#!/bin/bash
+MY_SHELL="bash"
+echo "I like the $MY_SHELL shell."
+or 
+echo "I like the ${MY_SHELL} shell."
+
+Assign command output to a variable
+#!/bin/bash
+SERVER_NAME=$(hostname)
+echo "You are running this script on ${SERVER_NAME}."
+or 
+SERVER_NAME=`hostname`
+
+#####################
+File operators(tests)
+-d FILE -true if file is a directory
+-e FILE True if file exists
+-f FILE True if file exists and is a regular file
+-r FILE True is file is readable by you
+-s FILE True if file exists and is not empty
+-w FILE True if the file is writable by you
+-x FILE True if the file is executable by you
+-z STRING True if string is empty
+-n STRING True if string is not empty
+STRING1=STRING2  True if strings are equal
+STRING1!=STRING2 True if strings are not equal
+arg1 -eq arg2
+arg1 -ne arg2
+arg1 -lt arg2
+arg1 -le arg2
+arg1 -gt arg2
+arg1 -ge arg2
+
+#############
+Making decisions -The if statement
+
+if [ condition is true ]
+then 
+command 1
+command 2
+command N
+fi
+
+#!/bin/bash
+MY_SHELL="bash"
+if [ "$MY_SHELL" = "bash" ]
+then
+echo "You seem to like the bash shell."
+fi
+
+####if-else
+if [ condition is true ]
+then
+command N
+else
+command N
+fi
+
+###if/elif/else
+if [ condition is true ]
+then
+command N
+elif [ condition is true ]
+then
+command N
+else
+command N
+fi
+
+############
+For loop
+
+for VARIABLE_NAME in ITEM_1 ITEM_N
+do
+ command 1
+ command 2
+ command N
+done
+
+#!/bin/bash
+for COLOR in red green blue
+do
+echo "COLOR: $COLOR"
+done
+
+#!/bin/bash
+COLORS="red green blue"
+
+for COLORS in $COLORS
+do 
+  echo "COLOR: $COLOR"
+done
+
+
+#!/bin/bash
+PICTURES=$(ls *jpg)
+DATE=$(date +%F)	-use command (man date) to learn more
+
+for PICTURE in $PICTURES
+do 
+ echo "Renaming ${PICTURE} to ${DATE}-${PICTURE}"
+ mv ${PICTURE} ${DATE}-${PICTURE}
+done
+
+
+########
+Positional Parameters
+$script.sh parameter1 parameter2 parameter3 
+
+#!/bin/bash
+echo "Executing script: $0"
+echo "Archiving user: $1"
+
+#Lock the account
+passwd -l $1
+#create an archive of the home directory.
+tar cf /archives/${1}.tar.gz /home/${1}
+
+----------------
+#!/bin/bash
+USER=$1
+echo "Executing script: $0"
+echo "Archiving user: $1"
+
+#Lock the account
+passwd -l $1
+#create an archive of the home directory.
+tar cf /archives/${USER}.tar.gz /home/${USER}
+
+-------------------
+#!/bin/bash
+echo "Executing script: $0"
+for USER in $@
+do
+echo "Archiving user: $USER"
+#Lock the account
+passwd -l $USER
+#create an archive of the home directory.
+tar cf /archives/${USER}.tar.gz /home/${USER}
+done
+
+./archive_user.sh chet joe
+
+#########3
+Accepting user input(STDIN)
+The read commands accepts STDIN
+syntax- read -p "PROMPT" VARIABLE
+
+#!/bin/bash
+read -p "Enter a user name: " USER
+echo "Archiving user: $USER"
+
+#Lock the account
+passwd -l $USER
+
+#Create an archive of the home directory
+tar cf /archives/${USER}.tar.gz /home/${USER}
+
+
+
+
